@@ -44,4 +44,4 @@ The solution transforms SSRS report exports into a dynamic reporting model with 
 
 > About Me
 
-I am a Pension Payroll Data Analyst Pension professional with experience improving reporting processes through Excel automation, Power Query, Power Pivot, and data transformation techniques.
+I am a Pension Payroll Data Analyst with experience improving reporting processes through Excel automation, Power Query, Power Pivot, and data transformation techniques.
