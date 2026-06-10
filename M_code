@@ -1,0 +1,40 @@
+========================
+M Code - Raw Data Set 1
+========================
+let
+    Source = Excel.Workbook(File.Contents(ABC_Sheet = Source{[Item="ABC",Kind="Sheet"]}[Data],
+    #"Promoted Headers" = Table.PromoteHeaders(ABC_Sheet, [PromoteAllScalars=true]),
+    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Payroll ID", Int64.Type}, {"Payroll", type text}, {"Title", type text}, {"Forenames", type text}, {"Surname", type text}, {"NI Number", type text}, {"Date of Birth", type date}, {"Pay Date", type date}, {"Pay Frequency", type text}, {"Total Pension Per Source/Adjustment", Int64.Type}, {"DATAA", type text}, {"DATAB", type text}, {"DATAC", Int64.Type}, {"DATAD", Int64.Type}, {"Fund Flag", type text}}),
+    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Title", "Forenames", "Surname", "NI Number", "Date of Birth", "Pay Date", "Pay Frequency", "DATAA", "DATAB", "DATAC", "DATAD"}),
+    #"Filtered Rows" = Table.SelectRows(#"Removed Columns", each ([Fund Flag] <> "Fund 3")),
+    #"Grouped Rows" = Table.Group(#"Filtered Rows", {"Payroll ID", "Payroll", "Fund Flag"}, {{"Total Pay", each List.Sum([#"Total Pension Per Source/Adjustment"]), type nullable number}}),
+    #"Reordered Columns" = Table.ReorderColumns(#"Grouped Rows",{"Payroll ID", "Total Pay", "Payroll", "Fund Flag"}),
+    #"Renamed Columns" = Table.RenameColumns(#"Reordered Columns",{{"Payroll", "Scheme Name"}}),
+    #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Columns",{{"Total Pay", Currency.Type}})
+in
+    #"Changed Type1"
+
+========================
+M Code - Raw Data Set 2
+========================
+
+let
+    Source = Excel.Workbook(File.Contents(DEF_Sheet = Source{[Item="DEF",Kind="Sheet"]}[Data],
+    #"Promoted Headers" = Table.PromoteHeaders(DEF_Sheet, [PromoteAllScalars=true]),
+    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Payroll ID", Int64.Type}, {"Surname", type text}, {"Forenames", type text}, {"NINO", type text}, {"Pay Date", type date}, {"Tax Code", type text}, {"Tax Basis", type text}, {"Total Taxable Pay", Int64.Type}, {"Payment Method", type text}, {"Scheme Name", type text}, {"Date Of Birth", type date}, {"Address Line 1", type text}, {"Address Line 2", type text}, {"BUY IN PROVIDER EFFECTIVE DATE", type text}}),
+    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Surname", "Forenames", "NINO", "Pay Date", "Tax Code", "Tax Basis", "Payment Method", "Date Of Birth", "Address Line 1", "Address Line 2"}),
+    #"Filtered Rows" = Table.SelectRows(#"Removed Columns", each ([BUY IN PROVIDER EFFECTIVE DATE] <> "Fund 3")),
+    #"Grouped Rows" = Table.Group(#"Filtered Rows", {"Payroll ID", "Scheme Name", "BUY IN PROVIDER EFFECTIVE DATE"}, {{"Total Pay", each List.Sum([Total Taxable Pay]), type nullable number}}),
+    #"Renamed Columns" = Table.RenameColumns(#"Grouped Rows",{{"BUY IN PROVIDER EFFECTIVE DATE", "Fund Flag"}}),
+    #"Reordered Columns" = Table.ReorderColumns(#"Renamed Columns",{"Payroll ID", "Total Pay", "Scheme Name", "Fund Flag"}),
+    #"Changed Type1" = Table.TransformColumnTypes(#"Reordered Columns",{{"Total Pay", Currency.Type}})
+in
+    #"Changed Type1"
+
+===============
+M Code - Append 
+===============
+let
+    Source = Table.Combine({ABC, DEF})
+in
+    Source
