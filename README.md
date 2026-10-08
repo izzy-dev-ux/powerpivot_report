@@ -13,7 +13,8 @@ The solution transforms SSRS report exports into a dynamic reporting model with 
 - Manual totals and member counts
 - Separate SSRS exports by scheme type
 
-> The Solution: 
+> The Solution:
+
 1. **Power Query**
   - Cleaned and standardised two SSRS reports
   - Created individual transformed data tables
@@ -24,7 +25,13 @@ The solution transforms SSRS report exports into a dynamic reporting model with 
   - Created interactive slicers by provider
 
 # Process Documentation
+> Project Files
+
+- **[View Excel Workbook](./data_validation.xlsx)**
+- **[View Power Query M Code](./M_code.txt)**
+  
 > Key Transformations:
+
 - Removed unnecessary columns
 - Filtered required fund records
 - Grouped rows for payroll aggregation
@@ -36,6 +43,7 @@ The solution transforms SSRS report exports into a dynamic reporting model with 
 ![image](flowchart.png)
 
 > Opportunities for Further Development
+
 - Automated SSRS refresh integration
 - Additional reconciliation checks
 - KPI dashboard visuals
@@ -45,3 +53,5 @@ The solution transforms SSRS report exports into a dynamic reporting model with 
 > About Me
 
 I am a Pension Payroll Data Analyst with experience improving reporting processes through Excel automation, Power Query, Power Pivot, and data transformation techniques.
+
+[← Back to Portfolio](https://izzy-dev-ux.github.io/)
