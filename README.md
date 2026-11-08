@@ -28,7 +28,7 @@ The solution transforms SSRS report exports into a dynamic reporting model with 
 > Project Files
 
 - **[View Excel Workbook](./data_validation.xlsx)**
-- **[View Power Query M Code](./M_code)**
+- **[View Power Query M Code](./M_code.txt)**
   
 > Key Transformations:
 
